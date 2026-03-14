@@ -1,0 +1,10 @@
+[package]
+name = "no-std-repl"
+version = "0.1.0"
+edition = "2024"
+description = "Minimal no_std REPL building blocks for embedded serial CLIs"
+license = "MIT OR Apache-2.0"
+
+[features]
+default = []
+std = []
