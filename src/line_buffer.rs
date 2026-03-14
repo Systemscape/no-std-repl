@@ -84,10 +84,11 @@ impl<const N: usize> LineBuffer<N> {
         &self.buf[..self.len]
     }
 
-    /// Clear the buffered line and reset newline coalescing state.
+    /// Clear the buffered line. Does not reset newline coalescing state,
+    /// so a `\n` immediately following a `\r` will still be ignored even
+    /// if `clear()` is called in between.
     pub fn clear(&mut self) {
         self.len = 0;
-        self.prev_cr = false;
     }
 
     /// Returns `true` when the buffer currently holds no bytes.
@@ -207,11 +208,11 @@ mod tests {
     }
 
     #[test]
-    fn clear_resets_pending_cr_state() {
+    fn clear_preserves_pending_cr_state() {
         let mut buf = LineBuffer::<64>::new();
         assert_eq!(buf.push(b'\r'), Outcome::LineComplete);
         buf.clear();
-        assert_eq!(buf.push(b'\n'), Outcome::LineComplete);
+        assert_eq!(buf.push(b'\n'), Outcome::Continue);
     }
 
     #[test]
