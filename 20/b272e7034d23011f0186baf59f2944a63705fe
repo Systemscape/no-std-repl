@@ -1,0 +1,30 @@
+Cargo.toml
+  s_7e73bb34b50e0d::t_0bf58553602c39 7-9
+examples/host_repl.rs
+  s_7e73bb34b50e0d::t_6e84c93237b973 80-81
+README.md
+  s_7e73bb34b50e0d::t_86a01572026f97 104-109
+  s_7e73bb34b50e0d::t_d35ca81abb0de8 30,35
+  s_7e73bb34b50e0d::t_ffaf82fecc3b06 94,96
+src/line_buffer.rs
+  s_7e73bb34b50e0d::t_1d20cc5f66281f 23-31,34-37,42-43,53-54,61-63,67-102,108-124,128-134,145
+  s_7e73bb34b50e0d::t_b58624b7f69bba 163-166
+  s_7e73bb34b50e0d::t_694eec9bc8925f 333-436
+  s_7e73bb34b50e0d::t_2f90bc30d9c874 9-11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "20b272e7034d23011f0186baf59f2944a63705fe",
+  "prompts": {},
+  "sessions": {
+    "s_7e73bb34b50e0d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9fca66b6-0a39-42ea-b6fe-2c04d70386d1",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Joël Schulz-Andres <joel@systemscape.de>"
+    }
+  }
+}
