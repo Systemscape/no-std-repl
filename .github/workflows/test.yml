@@ -1,0 +1,21 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, master]
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Install stable Rust
+        run: rustup toolchain install stable --profile minimal
+      - name: Run tests
+        run: cargo +stable test --verbose
