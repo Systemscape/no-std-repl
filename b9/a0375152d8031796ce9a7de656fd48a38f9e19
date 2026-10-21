@@ -1,0 +1,23 @@
+.github/workflows/test.yml
+  s_23a151597bf25d::t_aef51b0f3d5e49 1-21
+LICENSE-APACHE
+  s_23a151597bf25d::t_1a741c564db310 1-201
+LICENSE-MIT
+  s_23a151597bf25d::t_aef51b0f3d5e49 1-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b9a0375152d8031796ce9a7de656fd48a38f9e19",
+  "prompts": {},
+  "sessions": {
+    "s_23a151597bf25d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a15e86-75f8-72b1-baca-7492432106aa",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Joël Schulz-Andres <joel@systemscape.de>"
+    }
+  }
+}
