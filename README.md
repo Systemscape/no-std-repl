@@ -27,12 +27,12 @@ fn repl_loop(serial: &mut impl Serial) {
             if let Some(byte) = serial.try_read() {
                 serial.write(byte); // echo
                 match line.push(byte) {
-                    Outcome::Continue => {}
+                    Outcome::Continue | Outcome::BufferFull => {}
                     Outcome::LineComplete => {
                         writeln!(serial).ok();
                         break;
                     }
-                    Outcome::BufferFull => {
+                    Outcome::LineOverflow => {
                         writeln!(serial, "\r\nline too long").ok();
                         line.clear();
                         break;
@@ -91,9 +91,9 @@ fn repl_loop(serial: &mut impl Serial) {
 
 Three types, zero dependencies, zero allocations:
 
-- **`LineBuffer<N>`** - Accumulates bytes until newline, handles backspace and CR+LF coalescing
+- **`LineBuffer<N>`** - Accumulates bytes until newline, handles backspace, escape sequences, and CR+LF coalescing
 - **`Parts<'a, N>`** - Parses a line into parts for slice pattern matching
-- **`Outcome`** - Push result: `Continue`, `LineComplete`, or `BufferFull`
+- **`Outcome`** - Push result: `Continue`, `LineComplete`, `LineOverflow`, or `BufferFull`
 
 The pattern matching syntax (`["cmd", arg1, arg2]`) is standard Rust slice patterns.
 
@@ -101,7 +101,12 @@ The pattern matching syntax (`["cmd", arg1, arg2]`) is standard Rust slice patte
 
 - Line endings: `\r`, `\n`, and `\r\n` all terminate the line. The terminator is
   not stored in the buffer.
-- Backspace: both `0x08` and `0x7F` remove one buffered byte if present.
+- Backspace: both `0x08` and `0x7F` remove one buffered UTF-8 character if present.
+- Escape sequences: ANSI CSI and SS3 sequences (arrow keys, Home/End, ...) are
+  consumed and never stored, so stray key presses do not corrupt the line.
+- Overlong lines: once capacity is exceeded, the rest of the line is dropped
+  (each dropped byte reports `Outcome::BufferFull`) and the terminator reports
+  `Outcome::LineOverflow` instead of `Outcome::LineComplete`.
 - UTF-8: `LineBuffer::as_str()` returns `None` for invalid UTF-8, but
   `LineBuffer::as_bytes()` always exposes the raw bytes.
 - Part limit: `Parts::<N>::parse()` keeps at most `N` whitespace-separated parts.

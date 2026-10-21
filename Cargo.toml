@@ -4,7 +4,6 @@ version = "0.1.0"
 edition = "2024"
 description = "Minimal no_std REPL building blocks for embedded serial CLIs"
 license = "MIT OR Apache-2.0"
-
-[features]
-default = []
-std = []
+repository = "https://github.com/Systemscape/no-std-repl"
+keywords = ["no-std", "embedded", "repl", "cli", "serial"]
+categories = ["embedded", "no-std", "command-line-interface"]

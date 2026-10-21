@@ -77,7 +77,8 @@ fn main() -> io::Result<()> {
                 write!(stdout, "> ")?;
                 stdout.flush()?;
             }
-            Outcome::BufferFull => {
+            Outcome::BufferFull => {}
+            Outcome::LineOverflow => {
                 writeln!(stdout, "\nline too long")?;
                 line.clear();
                 write!(stdout, "> ")?;
