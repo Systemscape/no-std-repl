@@ -3,6 +3,7 @@ name: Tests
 on:
   push:
     branches: [main, master]
+  pull_request:
   release:
     types: [published]
 
@@ -16,6 +17,12 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
       - name: Install stable Rust
-        run: rustup toolchain install stable --profile minimal
+        run: rustup toolchain install stable --profile minimal --component clippy,rustfmt --target thumbv6m-none-eabi
+      - name: Check formatting
+        run: cargo +stable fmt --check
+      - name: Run clippy
+        run: cargo +stable clippy --all-targets -- -D warnings
+      - name: Build for bare-metal target
+        run: cargo +stable build --target thumbv6m-none-eabi
       - name: Run tests
         run: cargo +stable test --verbose

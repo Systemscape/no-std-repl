@@ -1,5 +1,8 @@
 /// Whitespace-separated command parts, enabling slice pattern matching.
 ///
+/// The default capacity applies in type annotations (`parts: Parts<'_>`).
+/// Expressions need an explicit capacity: `Parts::<8>::parse(line)`.
+///
 /// # Example
 ///
 /// ```
